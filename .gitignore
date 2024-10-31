@@ -1,0 +1,11 @@
+node_modules
+# Keep environment variables out of version control
+# Environment files
+.env*
+.env.local
+.env.development
+.env.test
+.env.production
+# Build directories
+dist/
+build/
