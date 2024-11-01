@@ -109,3 +109,46 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const logout =async(req:Request,res:Response)=>{
+	try{
+		res.cookie("jwt", "", {
+			maxAge: 0,
+			httpOnly: true,
+			sameSite: true,
+			secure: process.env.NODE_ENV !== "development"
+		});
+		return res.status(200).json({
+			success:true,
+			message:"Logged Out Successfully"
+		})
+	}
+	catch(error:any){
+		console.log("Error in logout endpoint", error);
+		return res.status(500).json({
+		  error: `Internal Server Error: Error during logout - ${error.message}`,
+		});
+	}
+};
+export const getMe = async (req: Request, res: Response): Promise<void> => {
+  try {
+      const userIdFromCurrentSession = res.locals.userId;
+      const user = await prismaClient.user.findUnique({ where: { id: userIdFromCurrentSession } });
+
+      if (!user) {
+          res.status(404).json({status:"Not Verified", error: "User not found" });
+          return;
+      }
+
+      res.status(200).json({
+          status:"Verified",
+          id: user.id,
+          fullName: user.fullname,
+          username: user.username,
+          profilePic: user.profilePic,
+      });
+  } catch (error: any) {
+      console.log("Error in getMe controller", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};
