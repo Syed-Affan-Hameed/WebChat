@@ -6,12 +6,12 @@ import messageRoutes from "./routes/message.route.js";
 const app = express();
 dotenv.config();
 app.use(express.json());
-app.use("api/v1/auth",authRoutes);
-app.use("api/v1/message",messageRoutes);
+app.use("/api/v1/auth",authRoutes);
+app.use("/api/v1/message",messageRoutes);
 app.get("/", (req, res) => {
 
 	res.send("Hello World!!!");
 });
 app.listen(5000, () => {
-	console.log("Server is running on port 3000");
+	console.log("Server is running on port 5000");
 });
