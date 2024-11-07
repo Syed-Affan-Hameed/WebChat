@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prismaClient from "../db/prisma.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (
   req: Request,
@@ -53,8 +54,13 @@ export const sendMessage = async (
         },
       });
 
-      //socket.io for real time will go here
-
+      //socket.io for real time messages
+      //first, we get the socketId of the receiver using their receiverId
+      const recieverSocketId = getReceiverSocketId(recieverId);
+      //reciever will have sokect id is the user is online
+      if(recieverSocketId){
+        io.to(recieverSocketId).emit("newMessage",newMessage);
+      }
       // Send success response with the created message
       res.status(201).json(newMessage);
     } else {
