@@ -3,7 +3,8 @@ import dotenv from "dotenv"
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import cookieParser from "cookie-parser"
-const app = express();
+import { app, server } from "./socket/socket.js";
+
 dotenv.config();
 
 const PORT =process.env.PORT || 5007;
@@ -15,6 +16,6 @@ app.get("/", (req, res) => {
 
 	res.send("Hello World!!!");
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Server is running on ${PORT}`);
 });

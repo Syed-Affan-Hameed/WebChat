@@ -1,10 +1,17 @@
+import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
 
 const Conversation = ({ conversation }: { conversation: ConversationType }) => {
 
 	const {setSelectedConversation,selectedConversation} = useConversation();
 	const isSelected = selectedConversation?.id === conversation.id;
-	const isOnline = false;
+
+	//
+	const {onlineUsers} = useSocketContext();
+	/*if the conersation.id which is the userId of the person whose conversation we have selected in the sidebar
+	 is present in the onlineUsers array then the user is Online*/
+	const isOnline = onlineUsers.includes(conversation.id);
+	
 	return (
 		<>
 			<div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer ${isSelected?'bg-sky-900':''}`}
