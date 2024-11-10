@@ -14,7 +14,7 @@ const __dirname =path.resolve();
 app.use(express.json());
 // Define allowed origins
 const allowedOrigins = [
-	"https://reactrealtimechat.onrender.com", // Deployed app
+	"https://reactrealtimewebchat.onrender.com", // Deployed app
   ];
   
   // CORS Middleware
