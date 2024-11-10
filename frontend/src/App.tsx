@@ -6,7 +6,7 @@ import { useAuthContext } from "./context/AuthContext"
 import { Toaster } from "react-hot-toast"
 
 function App() {
-  const  {authUser,isLoading} =useAuthContext();
+  const  {authUser} =useAuthContext();
   return (
     <div className="p-4 h-screen flex items-center justify-center">
       <Routes>
